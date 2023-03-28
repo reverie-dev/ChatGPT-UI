@@ -15,8 +15,8 @@ const dataSources = computed(() => chatStore.history)
 async function handleSelect({ uuid }: Chat.History) {
   if (isActive(uuid))
     return
-    
-  if(chatStore.active)
+
+  if (chatStore.active)
     chatStore.updateHistory(chatStore.active, { isEdit: false })
   await chatStore.setActive(uuid)
 
@@ -32,6 +32,8 @@ function handleEdit({ uuid }: Chat.History, isEdit: boolean, event?: MouseEvent)
 function handleDelete(index: number, event?: MouseEvent | TouchEvent) {
   event?.stopPropagation()
   chatStore.deleteHistory(index)
+  if (isMobile.value)
+    appStore.setSiderCollapsed(true)
 }
 
 function handleEnter({ uuid }: Chat.History, isEdit: boolean, event: KeyboardEvent) {
